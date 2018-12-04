@@ -1,0 +1,66 @@
+{% extends 'pages/base.html' %} {% block Content %}
+<div class="row">
+  <div class="col-md-9">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <span style="color:deepskyblue;">{{ ques.owner }}</span>
+      </div>
+      <div class="panel-body">
+        {{ques.content}}
+      </div>
+    </div>
+    <label>&nbsp;Answers</label>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div>
+          {% for ans in ans %}
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <span style="color:deepskyblue;">{{ ans.owner }}</span>
+                  <p>{{ ans.content }}</p>
+                  {% if ques.qa.status == 0 %}
+                    <a href="#" data-toggle="collapse" data-target="#collp{{ans.id}}">Comment</a>
+                  {% endif %}
+                </div>
+                <div class="panel-body">
+                  {% for cmt in cmt %}
+                    {% if cmt.ans_id == ans.id %}
+
+
+                      <div  style="border-bottom: 1px solid #CFCFCF; padding: 10px;">
+                        <span style="color:deepskyblue;">{{ cmt.owner }}</span>&nbsp;<p style="display:inline-block;">{{cmt.content}}</p>
+                      </div>
+
+                  {% endif %} {% endfor %}
+                  <div div id="collp{{ans.id}}" class="collapse">
+                    <br>
+                    <form method="POST">
+                      {% csrf_token %} {{ form2.as_p }}
+                      <input type="hidden" name="uid" value="{{ user.id }}">
+                      <input type="hidden" name="aid" value="{{ ans.id }}">
+                      <button type="submit" class="btn btn-primary btn-sm" name="btn2">Post comment</button>
+                    </form>
+                  </div>
+                  </div>
+              </div>
+
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% if ques.qa.status == 0 %}
+          <form method="POST">
+            {% csrf_token %} {{ form.as_p }}
+            <input type="hidden" name="oid" value="{{ user.id }}">
+            <button type="submit" class="btn btn-primary" name="btna">Post</button>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+
+  {% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'pages/base.html' %} {% block Content %}
+<div class="row">
+  <div class="col-md-9">
+    <h3>{{ qa.name }}</h3>
+    <h5>{{ qa.create_at|date:'H:i, d-m-Y' }} &emsp; &emsp; by <span style="color:deepskyblue;">
+
+      {{ qa.teacher }}
+      {% if user.is_staff == True and user.id == qa.teacher_id or user.is_superuser == True %}
+        <form method="POST" style="display:inline-block;">
+          {% csrf_token %}
+          {% if qa.status == 0 %}
+            <button type="submit" class="btn btn-primary btn-sm btn-warning" name="btnclose" style="margin-left:200px;">Close</button>
+          {% else %}
+            <button type="submit" class="btn btn-primary btn-sm btn-success" name="btnopen" style="margin-left:200px;">Open</button>
+            <button type="submit" class="btn btn-primary btn-sm btn-danger" name="btndelete" ">Delete</button>
+          {% endif %}
+        </form>
+      {% endif %}
+      <br>
+      {% if qa.status == 0 %}
+        Opening
+      {% else %}
+        Closed
+      {% endif %}
+
+    </span>
+    </h5>
+    <br>
+    <h4 style="border-bottom: 1px solid #CFCFCF; padding-bottom: 10px;">{{ qa.detail }}</h4>
+    <ul class="nav flex-column">
+
+        <label>&nbsp;Questions</label>
+
+      {% for question in ques %}
+      <li class="li1" style="border: 1px solid #CFCFCF;">
+        <a href="/question/{{ question.id }}" >
+          <span style="color:deepskyblue;">{{ question.owner }}</span><br><p style="color: black;">{{ question.content }}</p>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <br>
+    {% if qa.status == 0 %}
+      <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="hidden" name="owner" value="{{ user.username }}">
+        <button type="submit" class="btn btn-primary btn-submit" name="btn1">Post</button>
+      </form>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

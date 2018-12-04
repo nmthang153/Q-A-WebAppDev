@@ -1,0 +1,14 @@
+{% extends 'pages/base.html' %}
+{% block Content %}
+    <div class="col-md-8">
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <input type="hidden" name="teacher" value="{{ user.username }}">
+            <button type="submit" class="btn btn-primary btn-submit">ADD</button>
+        </form>
+    </div>
+
+{% endblock %}

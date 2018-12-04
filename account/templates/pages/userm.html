@@ -1,0 +1,65 @@
+{% extends 'pages/base.html' %}
+{% block Content %}
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-12">
+            <h4><a href="/adduser">Add User</a></h4>
+
+            <div>
+                  <br>
+                <table class="table table-bordered" id="devicestable">
+                    <thead>
+                    <tr>
+                        <th>
+                            Username
+                        </th>
+                        <th>
+                            First name
+                        </th>
+                        <th>
+                            Last name
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                          Is teacher?
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                      {% for u in u %}
+                        {% if u.is_superuser == False %}
+                          <tr>
+                            <td>{{u.username}}</td>
+                            <td>{{u.first_name}}</td>
+                            <td>{{u.last_name}}</td>
+                            <td>{{u.email}}</td>
+                            {% if u.is_staff == True %}
+                              <td>Yes</td>
+                            {% else %}
+                              <td>No</td>
+                            {% endif %}
+                            <td>
+                              <button type="submit" class="btn btn-primary btn-sm btn-success" name="btndelete" "><i class="fa fa-edit fa-fw"></i>Edit</button>
+                              <button type="submit" class="btn btn-primary btn-sm btn-danger" name="btndelete" "><i class="fa fa-trash-o fa-fw"></i>Delete</button>
+                            </td>
+                          </tr>
+                        {% endif %}
+
+                      {% endfor %}
+                    </tbody>
+                </table>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

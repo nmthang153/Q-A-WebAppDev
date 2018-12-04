@@ -1,0 +1,31 @@
+{% extends 'pages/base.html' %}
+{% block Content %}
+
+    <ul class="nav flex-column">
+
+
+
+      {% for ses in list %}
+      <li class="li1" style="border: 1px solid #CFCFCF;">
+
+        <a href="/session/{{ ses.id }}" >
+          <h3>{{ ses.name }}</h3>
+          <h5 >{{ ses.create_at|date:'H:i, d-m-Y' }} &emsp; &emsp; by <span style="color:deepskyblue;">
+
+            {{ ses.teacher }}
+            <br>
+            {% if ses.status == 0 %}
+              Opening
+            {% else %}
+              Closed
+            {% endif %}
+
+          </span>
+          </h5>
+        </a>
+
+      </li>
+      {% endfor %}
+    </ul>
+
+{% endblock %}

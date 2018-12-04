@@ -1,0 +1,39 @@
+{% extends 'pages/base.html' %}
+{% block Content %}
+    <h3>
+
+        <table class="table table-bordered" id="devicestable">
+            <thead>
+            <tr>
+                <th>
+                    Questions
+                </th>
+                <th>
+                    Sessions
+                </th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+              {% for ques in ques %}
+
+                {% if ques.owner_id == user.id %}
+                <tr>
+                  <td>
+
+                      <a href="/question/{{ ques.id }}">{{ ques.content }}</a>
+
+
+                  </td>
+                  <td>
+                      <a href="/session/{{ ques.qa_id }}">{{ ques.qa.name }}</a>
+                  </td>
+                </tr>
+                {% endif %}
+              {% endfor %}
+
+            </tbody>
+        </table>
+    </h3>
+{% endblock %}
